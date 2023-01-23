@@ -123,7 +123,7 @@ pipeline {
      
     stage('Build') {
       steps {
-        sh 'npm install'
+        sh 'npm install node.js'
         sh 'cd /home/mc/lightfeather-local/backend'
         sh 'docker build -t myfront:1.0 .'
         sh 'cd /home/mc/lightfeather-local/frontend'
