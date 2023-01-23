@@ -115,11 +115,11 @@ pipeline {
     
   stages {
         
-    stage('Git') {
-      steps {
+    // stage('Git') {
+    //   steps {
         
-      }
-    }
+    //   }
+    // }
      
     stage('Build') {
       steps {
