@@ -109,7 +109,9 @@
 pipeline {
   agent any
     
-  tools {NODEJS, "node"}
+  tools {
+    nodejs 'node.js 16'
+    }
     
   stages {
         
