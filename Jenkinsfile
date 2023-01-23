@@ -115,14 +115,17 @@ pipeline {
         
     stage('Git') {
       steps {
-        git ''
-      }https://github.com/mehoussou/my-code-remote.git
+        
+      }
     }
      
     stage('Build') {
       steps {
         sh 'npm install'
-        sh '<<Build Command>>'
+        sh 'cd /home/mc/lightfeather-local/backend'
+        sh 'docker build -t myfront:1.0 .'
+        sh 'cd /home/mc/lightfeather-local/frontend'
+        sh 'docker build -t myback:1.0 .'
       }
     }  
     
