@@ -109,7 +109,7 @@
 pipeline {
   agent any
     
-  tools {nodejs "node"}
+  tools {NODEJS "node"}
     
   stages {
         
