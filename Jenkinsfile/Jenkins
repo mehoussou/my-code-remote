@@ -2,10 +2,10 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID="162816112568"
+        AWS_ACCOUNT_ID= "162816112568"
         AWS_DEFAULT_REGION= "us-east-2"
-        IMAGE_REPO_NAME="my-code-chall"
-        IMAGE_TAG="b1""f1" or make both "latest"
+        IMAGE_REPO_NAME= "my-code-chall"
+        IMAGE_TAG= "latest"
         REPOSITORY_URI= "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall"
     }
     
@@ -14,7 +14,7 @@ pipeline {
         stage('Logging into AWS ECR'){
             steps {
                 script {
-                    sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v3f8i0q6'
+                    sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 162816112568.dkr.ecr.us-east-2.amazonaws.com'
                 }
             }
          }
@@ -28,7 +28,7 @@ pipeline {
          stage ('Building images.....'){
             steps {
                 script {
-                    dockerImage = docker.build "public.ecr.aws/v3f8i0q6/my-code-chall-app:latest"
+                    dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall"
                 }
             }
          }
