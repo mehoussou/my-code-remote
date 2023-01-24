@@ -1,7 +1,7 @@
 version: "3"
 services:
   front-app:
-    image: front-app
+    image: lightfeather-local/front-app:1.2
     ports: 
       - "3000:3000"
     networks:
@@ -9,7 +9,7 @@ services:
     depends_on:
       - back-app
   back-app:
-    image: back-app
+    image: lightfeather-localback-app:1.2
     ports:
       - "8080:8080"
     networks:
@@ -18,7 +18,7 @@ networks:
   code-chal-app:
     driver: bridge
 volumes:
-  back-data:
+  back-data: 
     driver: local
 
 
