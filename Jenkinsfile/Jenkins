@@ -1,13 +1,7 @@
 
 pipeline {
     agent any
-    environment {
-        AWS_ACCOUNT_ID= "162816112568"
-        AWS_DEFAULT_REGION= "us-east-2"
-        IMAGE_REPO_NAME= "my-code-chall"
-        IMAGE_TAG= "latest"
-        REPOSITORY_URI= "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall"
-    }
+   
     
     stages {
     
