@@ -1,13 +1,15 @@
 
 pipeline {
-    agent any
+    nodejs "NodeJS-19.4"
    
     
     stages {
     
+    
         stage('Logging into AWS ECR'){
             steps {
                 script {
+                    sh 'npm install'
                     sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 162816112568.dkr.ecr.us-east-2.amazonaws.com'
                 }
             }
@@ -15,7 +17,7 @@ pipeline {
          
          stage ('Cloning Git') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-code-remote-pub']])
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-code-remote.git']])
             }
          }
             
