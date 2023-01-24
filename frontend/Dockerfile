@@ -1,8 +1,8 @@
 
 FROM node:16-alpine
 
-# WORKDIR /usr/src/app
-WORKDIR /app
+WORKDIR /usr/src/app
+# WORKDIR /app
 
 COPY ./package*.json ./
 
@@ -12,8 +12,8 @@ COPY . .
 
 EXPOSE 3000
 
-# CMD [ "npm", "start" ]
-CMD [ "npm", "index.js" ]
+CMD [ "npm", "start" ]
+# CMD [ "npm", "index.js" ]
 
 
 
