@@ -66,7 +66,7 @@ pipeline {
         agent any
         steps{
             echo registry
-            echo 
+            echo service
             echo  registry + "/" + service + ":rc-" + BUILD_NUMBER
             sh " docker build . -t  ${registry}/${service}:rc-${BUILD_NUMBER}"
         }
@@ -93,16 +93,16 @@ pipeline {
             }
         }
     }
-    stage('deploy to ecs') {
-        agent any
-        steps {
-            script{
+//     stage('deploy to ecs') {
+//         agent any
+//         steps {
+//             script{
 
-            }
-        }
-    }
-    }
-}
+//             }
+//         }
+//     }
+//     }
+// }
 // ########################################################################################
 
 
