@@ -164,27 +164,3 @@ pipeline {
 
 
 // ##############PIPELINE SCRIPT IN JENKINSFILE####################
-
-
-// node {
-//     stage ('checkoutCode'){
-        
-//         checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-remote-code.git']])
-        
-//     }
-    
-//     // stage ('Build'){
-//     //     NodeJS(nodeJSInstallationName: 'NodeJS19.4.0'){
-//     //     sh "npm install"
-//     //     }
-//      stage ('Build'){
-//         sh "npm install"
-//         }
-        
-//     stage ('UploadArtifactintoGithubRepo'){
-//         // sh "npm publish"
-//         sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 162816112568.dkr.ecr.us-east-2.amazonaws.com'
-//         // sh 'docker push 162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest'
-//     }
-    
-// }
