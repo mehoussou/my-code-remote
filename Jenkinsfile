@@ -63,7 +63,7 @@ pipeline {
         
         stage ('checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-remote-code.git']])
+                checkout scmGit(branches: [[name: '*/pipeline']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-remote-code.git']])
                 
             }
         }
@@ -82,7 +82,7 @@ pipeline {
             steps {
                 script {
                         sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v3f8i0q6'
-                        sh 'docker push public.ecr.aws/v3f8i0q6/backend-app:latest'
+                        sh 'docker push public.ecr.aws/v3f8i0q6/back-appv:v1.1'
                 }
             }
 
@@ -90,8 +90,8 @@ pipeline {
             // Stoping Docker containers for cleaner Docker run
         stage ('Stop previous containers') {
             steps {
-                sh 'docker ps -f name=backend-app -q | xargs --no-run-if-empty docker container stop'
-                sh 'docker container ls -a -fname=backend-app -q | xargs -r docker container rm'
+                sh 'docker ps -f name=back-app -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=back-app -q | xargs -r docker container rm'
             }
         }
 
@@ -106,36 +106,28 @@ pipeline {
 }
 
 
-// pipeline {
-//   agent any
-    
-// //   tools {
-// //     nodejs 'node.js 16'
-// //     }
-    
-//   stages {
+// ##############PIPELINE SCRIPT IN JENKINSFILE####################
+
+
+// node {
+//     stage ('checkoutCode'){
         
-//     // stage('Git') {
-//     //   steps {
+//         checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-remote-code.git']])
         
-//     //   }
-//     // }
-     
-//     stage('Build') {
-//       steps {
-//         sh 'npm install node.js'
-//         sh 'cd /home/mc/lightfeather-local/backend'
-//         sh 'docker build -t myfront:1.0 .'
-//         sh 'cd /home/mc/lightfeather-local/frontend'
-//         sh 'docker build -t myback:1.0 .'
-//       }
-//     }  
-    
-            
-//     stage('Test') {
-//       steps {
-//         sh 'node test'
-//       }
 //     }
-//   }
+    
+//     // stage ('Build'){
+//     //     NodeJS(nodeJSInstallationName: 'NodeJS19.4.0'){
+//     //     sh "npm install"
+//     //     }
+//      stage ('Build'){
+//         sh "npm install"
+//         }
+        
+//     stage ('UploadArtifactintoGithubRepo'){
+//         // sh "npm publish"
+//         sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 162816112568.dkr.ecr.us-east-2.amazonaws.com'
+//         // sh 'docker push 162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest'
+//     }
+    
 // }
