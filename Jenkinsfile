@@ -15,9 +15,9 @@ pipeline {
     stage("Build Image"){
         agent any
         steps{
-            echo registry
-            echo service
-            echo  registry + "/" + service + ":rc-" + BUILD_NUMBER
+            echo "registry"
+            echo "service"
+            echo  "registry"+ "/" + "service" + ":rc-" + BUILD_NUMBER
             sh " docker build . -t  ${registry}/${service}:rc-${BUILD_NUMBER}"
         }
     }
@@ -36,7 +36,7 @@ pipeline {
         agent any
         steps {
             script{
-                echo service
+                echo "$service"
                 withAWS(region:'us-east-2', credentials:'ecr-creds') {
                     sh "docker push ${registry}/${service}:rc-${BUILD_NUMBER} "
                 }
