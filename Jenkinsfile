@@ -77,8 +77,7 @@ pipeline {
             script{
                 echo service
                 withAWS(region:'us-east-2', credentials:'ecr-creds') {
-                    sh " aws ecr get-login-password | docker login  -u
-AWS --password-stdin  ${registry}"
+                    sh " aws ecr get-login-password | docker login -u AWS --password-stdin  ${registry}"
                 }
             }
         }
