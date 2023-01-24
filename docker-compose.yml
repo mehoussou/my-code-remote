@@ -1,7 +1,7 @@
 version: "3"
 services:
   front-app:
-    image: lightfeather-local/front-app:1.2
+    image: front-app:v1
     ports: 
       - "3000:3000"
     networks:
@@ -9,7 +9,7 @@ services:
     depends_on:
       - back-app
   back-app:
-    image: lightfeather-localback-app:1.2
+    image: back-app:v1
     ports:
       - "8080:8080"
     networks:
