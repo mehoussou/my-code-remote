@@ -1,52 +1,55 @@
-registry = "public.ecr.aws/v3f8i0q6/back-app"
-
 pipeline {
-    agent none
-  stages {
-    stage ('checkout') {
+    agent any
+    
+    stages {
+        
+        stage('Logging into AWS ECR'){
             steps {
-                checkout scmGit(branches: [[name: '*/pipeline']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-remote-code.git']])
-                
-            }
-        }
-    }
-
-
-    stage("Build Image"){
-        agent any
-        steps{
-            echo "registry"
-            echo "service"
-            echo  "registry"+ "/" + "service" + ":rc-" + BUILD_NUMBER
-            sh " docker build . -t  ${registry}/${service}:rc-${BUILD_NUMBER}"
-        }
-    }
-    stage('Login to ecr') {
-        agent any
-        steps {
-            script{
-                echo service
-                withAWS(region:'us-east-2', credentials:'ecr-creds') {
-                    sh " aws ecr get-login-password | docker login -u AWS --password-stdin  ${registry}"
+                script {
+                    
+                    sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 162816112568.dkr.ecr.us-east-2.amazonaws.com'
                 }
             }
         }
-    }
-    stage('push image') {
-        agent any
-        steps {
-            script{
-                echo "$service"
-                withAWS(region:'us-east-2', credentials:'ecr-creds') {
-                    sh "docker push ${registry}/${service}:rc-${BUILD_NUMBER} "
+   
+        stage ('Cloning Git') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehoussou/my-code-remote.git']])
+            }
+         }
+            
+        stage ('Building images.....'){
+            steps {
+                script {
+                    dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall"
                 }
             }
         }
-    }
-
-    stage ('test code'){
-        steps {
-            sh 'docker-compose -f docker-compose.yml up -d '
+         
+         //Uploading Docker images into AWS ECR
+         
+        stage ('Tagging and Pushing Imagesto ECR....'){
+            steps {
+                script {
+                    sh 'docker tag my-code-chall:latest 162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest'
+                    sh 'docker push 162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest'
+                }
+            }  
         }
-    }
+         
+         
+        stage ('Deploying Application.....'){
+            steps {
+                script {
+                    def dockerCmd = 'docker-compose -d -p 3000:3000 --rm --name 162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest'
+                    sshagent(['lightfeatherec2WebSer-key']) {
+                        sh "ssh -o StrictHostkeyChecking=no ec2-user@3.137.207.83 ${dockerCmd}"
+    
+                    }
+                   
+                }
+            }
+        }
+    }  
 }
+
