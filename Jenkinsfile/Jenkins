@@ -14,7 +14,15 @@ pipeline {
          stage ('Building images.....'){
             steps {
                 script {
-                    dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall"
+                    sh "docker-compose "
+                    //dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall"
+                    dockerImage = docker-compose.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall"
+                    // path of Dockerfile
+                    dir(){
+                        sh "docker-commpose "
+                    }
+                    sh ""
+     
                 }
             }
          }
