@@ -21,9 +21,6 @@ pipeline {
         stage ('Building images.....'){
             steps {
                 script {
-                    
-                    // sh 'docker-compose build -t .'
-                    
                     dockerImage = docker-compose.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest"
                 }
             }
