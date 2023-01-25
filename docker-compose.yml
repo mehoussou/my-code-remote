@@ -56,16 +56,26 @@ services:
     build: .
     ports:
       - "3000:3000"
+    networks:
+      - code-chal-app
     depends_on:
       - back
   back:
     container_name: backend-container
-    image: back
     expose:
-      - "3000"
+      - "8080"
     build: .
     ports:
-      - "8080:8080"
-    volumes:
-      backup-data:
-        driver: local 
+      - "8080:8080" 
+    networks:
+      - code-chal-app
+volumes:
+  backup-data:
+networks:
+  code-chal-app:
+    driver: bridge
+  # networks:
+  #   driver: bridge
+# volumes:
+#   backup-data: 
+#     driver: local
