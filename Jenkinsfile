@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     def dockerCmd = 'docker-compose -d -p 3000:3000 --rm --name 162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest'
-                    sshagent(['lightfeatherec2WebSer-key']) {
+                    sshagent(['lightfeatherWeb-srv-key']) {
                         sh "ssh -o StrictHostkeyChecking=no ec2-user@3.137.207.83 ${dockerCmd}"
     
                     }
