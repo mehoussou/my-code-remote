@@ -1,48 +1,71 @@
+# # version: "3"
+# # services:
+# #   front-app:
+# #     image: front-app
+# #     ports: 
+# #       - "3000:3000"
+# #     networks:
+# #       - code-chal-app
+# #     depends_on:
+# #       - back-app
+# #   back-app:
+# #     image: back-app
+# #     ports:
+# #       - "8080:8080"
+# #     networks:
+# #       - code-chal-app
+# # networks:
+# #   code-chal-app:
+# #     driver: bridge
+# # volumes:
+# #   backup-data: 
+# #     driver: local
+
+
 # version: "3"
 # services:
-#   front-app:
-#     image: front-app
-#     ports: 
-#       - "3000:3000"
-#     networks:
-#       - code-chal-app
-#     depends_on:
-#       - back-app
 #   back-app:
 #     image: back-app
 #     ports:
 #       - "8080:8080"
+      
 #     networks:
 #       - code-chal-app
+#   front-app:
+#     image: front-app
+#     ports: 
+#       - "3000:3000"
+
+#     networks:
+#       - code-chal-app
+#     depends_on:
+#       - back-app
 # networks:
 #   code-chal-app:
 #     driver: bridge
 # volumes:
-#   backup-data: 
+#   backup-data:
 #     driver: local
 
 
-version: "3"
+version: '3'
 services:
-  back-app:
-    image: back-app
+  front:
+    container_name: frontend-container
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - back
+  back:
+    container_name: backend-container
+    image: back
+    expose:
+      - "3000"
+    build: .
     ports:
       - "8080:8080"
-      
-    networks:
-      - code-chal-app
-  front-app:
-    image: front-app
-    ports: 
-      - "3000:3000"
-
-    networks:
-      - code-chal-app
-    depends_on:
-      - back-app
-networks:
-  code-chal-app:
-    driver: bridge
-volumes:
-  backup-data:
-    driver: local
+    volumes:
+      backup-data:
+        driver: local 
