@@ -21,7 +21,9 @@ pipeline {
         stage ('Building images.....'){
             steps {
                 script {
-                    dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest" .
+                    sh 'cd /home/mc/lightfeather-local/backend/Dockerfile'
+                    sh 'cd /home/mc/lightfeather-local/frontend/Dockerfile'
+                    dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest"
                 }
             }
         }
