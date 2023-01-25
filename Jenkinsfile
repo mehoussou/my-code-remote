@@ -21,7 +21,7 @@ pipeline {
         stage ('Building images.....'){
             steps {
                 script {
-                    dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest"
+                    dockerImage = docker.build "162816112568.dkr.ecr.us-east-2.amazonaws.com/my-code-chall:latest" .
                 }
             }
         }
